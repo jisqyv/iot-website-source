@@ -5,19 +5,20 @@
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
-Vagrant.configure("2") do |config|
+Vagrant.configure(2) do |config|
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "jisxenial"
+  # config.vm.box = "ubuntu/xenial64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
-  # config.vm.box_check_update = false
+  config.vm.box_check_update = false
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -39,18 +40,11 @@ Vagrant.configure("2") do |config|
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
 
-  # Starting an ubuntu VM takes a long time, the first time.
-  # So set a rediculous boot timeout
-  config.vm.boot_timeout = 6000000000000
-
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  config.vm.provider "virtualbox" do |vb|
-    # Customize the amount of memory on the VM:
-    vb.memory = "2048"
-  end
+  config.vm.provider "lxc"
   #
   # View the documentation for the provider you are using for more
   # information on available options.
@@ -68,7 +62,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
     apt-get install -y nodejs nodejs-legacy npm emacs24-nox entr
-    su ubuntu -c "cd /vagrant && npm install"
-    su ubuntu -c "cd /vagrant/docs && npm install"
+    su vagrant -c "cd /vagrant && npm install"
+    su vagrant -c "cd /vagrant/docs && npm install"
   SHELL
 end
